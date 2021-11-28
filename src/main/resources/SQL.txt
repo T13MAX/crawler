@@ -1,0 +1,45 @@
+create database fanhaoko;
+
+use fanhaoko;
+
+create table movie(
+	id int(10) primary key auto_increment comment'主键 id',
+	number varchar(10) not null comment'番号',
+	name varchar(10) comment'演员名字',
+	moviename varchar(200) comment'作品名',
+	label varchar(100) comment'类别标签',
+	grade int(3) comment'等级 最高0级 最低9级',
+	photo varchar(100) comment'图片路径',
+	date date comment'发布日期',
+	createdate datetime comment'本数据的创建日期'
+);
+
+create table actress(
+	id int(10) primary key auto_increment comment'主键 id',
+	name varchar(10) comment'演员名字',
+	urlname varchar(20) comment'演员名字',
+	grade int(3) comment'等级'
+);
+
+insert into actress values(default,'三上悠亚','ssyouya',0);
+insert into actress values(default,'桥本有菜','qiaobenyoucai',0);
+insert into actress values(default,'明理由','mingliyou',0);
+insert into actress values(default,'桃乃木香奈','taonaimuxn',0);
+insert into actress values(default,'天使萌','tianshimeng',1);
+insert into actress values(default,'樱空桃','yingkongtao',0);
+insert into actress values(default,'相泽南','xiangzhenan',0);
+insert into actress values(default,'园田美樱','yuantianmeiyin',0);
+insert into actress values(default,'宇都宫紫苑','rion',0);
+insert into actress values(default,'葵司','kuisi',0);
+insert into actress values(default,'葵','kui',0);
+insert into actress values(default,'爱音麻里亚','aymaliya',1);
+insert into actress values(default,'铃村爱里','lingcunaili',1);
+insert into actress values(default,'小岛南','xiaodaonan',0);
+insert into actress values(default,'星宫一花','xinggyihua00',1);
+insert into actress values(default,'枫花恋','fengkelian6',0);
+insert into actress values(default,'九重环奈','jiuchuann',0);
+insert into actress values(default,'友田彩也香','ytcyx',1);
+insert into actress values(default,'西宫梦','xigongmeng',0);
+insert into actress values(default,'蓝牙水月','lanyameiyue',0);
+
+
