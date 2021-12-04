@@ -21,6 +21,12 @@ create table actress(
 	grade int(3) comment'等级'
 );
 
+create table lastest_date(
+	id int(10),
+	name varchar(10) comment'演员名字',
+	date date comment'最新作品日期'
+);
+
 insert into actress values(default,'三上悠亚','ssyouya',0);
 insert into actress values(default,'桥本有菜','qiaobenyoucai',0);
 insert into actress values(default,'明理由','mingliyou',0);

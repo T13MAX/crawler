@@ -2,13 +2,16 @@ package com.atb.crawler.processor;
 
 
 import com.atb.crawler.entity.Actress;
+import com.atb.crawler.entity.LastestDate;
 import com.atb.crawler.entity.Movie;
 import com.atb.crawler.pipeline.MoviePipeline;
 import com.atb.crawler.service.ActressService;
+import com.atb.crawler.service.LastestDateService;
 import com.atb.crawler.service.MovieService;
 import com.atb.crawler.utils.HttpUtils;
 import com.atb.crawler.utils.SpringUtil;
 import javafx.application.Application;
+import jdk.nashorn.internal.ir.CallNode;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -21,6 +24,7 @@ import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.processor.PageProcessor;
+import us.codecraft.webmagic.selector.Selectable;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -44,19 +48,35 @@ public class MovieProcessor implements PageProcessor {
     private MoviePipeline moviePipeline;
     @Autowired
     private ActressService actressService;
+    @Autowired
+    private LastestDateService lastestDateService;
 
     @Override
     public void process(Page page) {
 
         List<String> all = page.getHtml().css("div[class=gallery-list list-box] div ul").links().all();
-        Set<String> set = new HashSet<>(all);//去重
+        /*String name = page.getHtml().css("h1").toString();
+
         //判断是否是库里没有的新作品
+        LastestDate lastestDate = lastestDateService.findByName(name);
+        for (String s : all) {
+            String dateStr = s.substring(s.indexOf("<em class=\"size\">") + 17, s.indexOf("</em>"));
+
+            try {
+                Date parse = FMT.parse(dateStr);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            if(lastestDate==null||lastestDate page)
+        }*/
+
+        //爬所有作品
+        Set<String> set = new HashSet<>(all);//去重
         for (String s : set) {
             String number = s.substring(s.indexOf("fan/") + 4, s.lastIndexOf(".html"));
             Movie movie = SpringUtil.getBean(MovieService.class).findByNumber(number);
             if (movie == null) page.addTargetRequest(s);
         }
-        //page.addTargetRequests(new ArrayList<>(set));
         saveMovie(page);
     }
 
@@ -99,7 +119,7 @@ public class MovieProcessor implements PageProcessor {
         return site;
     }
 
-    //@Scheduled(initialDelay = 1000, fixedDelay = 100000 * 1000)
+    @Scheduled(initialDelay = 1000, fixedDelay = 100000 * 1000)
     public void run() {
         System.out.println("爬虫开始了");
         //HttpClientDownloader downloader = new HttpClientDownloader();//https://proxy.mimvp.com/freeopen
